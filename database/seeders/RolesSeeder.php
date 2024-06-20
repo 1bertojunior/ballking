@@ -16,6 +16,6 @@ class RolesSeeder extends Seeder
             ['name' => 'Usuário','created_at' => now(), 'updated_at' => now()],
         ];
         
-        DB::table('states')->insert($roles);
+        DB::table('roles')->insert($roles);
     }
 }
