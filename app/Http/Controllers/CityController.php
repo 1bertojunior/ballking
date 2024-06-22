@@ -9,6 +9,7 @@ use App\Services\CityServices;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Support\Facades\Gate;
 
 class CityController extends Controller
 {
@@ -18,6 +19,7 @@ class CityController extends Controller
     public function index()
     {
         try {
+            Gate::authorize('viewAny', City::class);
             $citys = $this->cityServices->list();
             return response()->json($citys, Response::HTTP_OK);
         } catch (\Exception $e) {
