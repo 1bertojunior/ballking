@@ -2,71 +2,100 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CityStoreRequest;
+use App\Http\Requests\CityUpdateRequest;
 use App\Models\City;
+use App\Services\CityServices;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class CityController extends Controller
 {
+    public function __construct(protected CityServices $cityServices)
+    {}
+
     public function index()
     {
         try {
-            $Citys = City::all();
-            return response()->json($Citys, Response::HTTP_OK);
+            $citys = $this->cityServices->list();
+            return response()->json($citys, Response::HTTP_OK);
         } catch (\Exception $e) {
-            return response()->json(['error' => 'Erro ao buscar cidades.'], Response::HTTP_INTERNAL_SERVER_ERROR);
+            return response()->json([
+                'error' => 'Erro ao buscar cidades.',
+                'message' => $e->getMessage(),
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
 
-    public function store(Request $request)
+    public function store(CityStoreRequest $request)
     {
-        // VALIDATE
-
         try {
-            $City = City::create($request->all());
-            return response()->json($City, Response::HTTP_CREATED);
+            $city = $this->cityServices->store($request);
+
+            return response()->json($city, Response::HTTP_CREATED);
         } catch (\Exception $e) {
-            return response()->json(['error' => 'Erro ao criar cidade.'], Response::HTTP_INTERNAL_SERVER_ERROR);
+            return response()->json([
+                'error' => 'Erro ao criar cidade.',
+                'message' => $e->getMessage(),
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
 
-    public function show(int $id)
+    public function show(City $city)
     {
         try {
-            $City = City::findOrFail($id);
-            return response()->json($City, Response::HTTP_OK);
+            return response()->json($city, Response::HTTP_OK);
         } catch (ModelNotFoundException $e) {
-            return response()->json(['error' => 'Cidade não encontrado.'], Response::HTTP_NOT_FOUND);
+            return response()->json([
+                'error' => 'Cidade não encontrado.',
+                'message' => $e->getMessage(),
+            ], Response::HTTP_NOT_FOUND);
         } catch (\Exception $e) {
-            return response()->json(['error' => 'Erro ao buscar Cidade.'], Response::HTTP_INTERNAL_SERVER_ERROR);
+            return response()->json([
+                'error' => 'Erro ao buscar Cidade.',
+                'message' => $e->getMessage(),
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
 
-    public function update(Request $request, City $City, int $id)
+    public function update(CityUpdateRequest $request, City $city)
     {
-        // VALIDATE
         try {
-            $City = City::findOrFail($id);
-            $City->update($request->all());
-            return response()->json($City, Response::HTTP_OK);
+            $city = $this->cityServices->update($request, $city);
+
+            return response()->json($city, Response::HTTP_OK);
         } catch (ModelNotFoundException $e) {
-            return response()->json(['error' => 'Cidade não encontrado.'], Response::HTTP_NOT_FOUND);
+            return response()->json([
+                'error' => 'Cidade não encontrado.',
+                'message' => $e->getMessage(),
+            ], Response::HTTP_NOT_FOUND);
         } catch (\Exception $e) {
-            return response()->json(['error' => 'Erro ao atualizar Cidade.'], Response::HTTP_INTERNAL_SERVER_ERROR);
+            return response()->json([
+                'error' => 'Erro ao buscar Cidade.',
+                'message' => $e->getMessage(),
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
 
-    public function destroy(int $id)
+    public function destroy(City $city)
     {
         try {
-            $City = City::findOrFail($id);
-            $City->delete();
-            return response()->json(null, Response::HTTP_NO_CONTENT);
+            $this->cityServices->destroy($city);
+            
+            return response()->json([
+                'message' => 'Deletado com sucesso'
+            ], Response::HTTP_NO_CONTENT);
         } catch (ModelNotFoundException $e) {
-            return response()->json(['error' => 'Cidade não encontrado.'], Response::HTTP_NOT_FOUND);
+            return response()->json([
+                'error' => 'Cidade não encontrado.',
+                'message' => $e->getMessage(),
+            ], Response::HTTP_NOT_FOUND);
         } catch (\Exception $e) {
-            return response()->json(['error' => 'Erro ao deletar Cidade.'], Response::HTTP_INTERNAL_SERVER_ERROR);
+            return response()->json([
+                'error' => 'Erro ao buscar Cidade.',
+                'message' => $e->getMessage(),
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
 }
