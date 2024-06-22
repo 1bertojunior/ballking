@@ -33,6 +33,7 @@ class CityController extends Controller
     public function store(CityStoreRequest $request)
     {
         try {
+            Gate::authorize('create', City::class);
             $city = $this->cityServices->store($request);
 
             return response()->json($city, Response::HTTP_CREATED);
@@ -47,6 +48,7 @@ class CityController extends Controller
     public function show(City $city)
     {
         try {
+            Gate::authorize('view', $city);
             return response()->json($city, Response::HTTP_OK);
         } catch (ModelNotFoundException $e) {
             return response()->json([
@@ -64,6 +66,7 @@ class CityController extends Controller
     public function update(CityUpdateRequest $request, City $city)
     {
         try {
+            Gate::authorize('update', $city);
             $city = $this->cityServices->update($request, $city);
 
             return response()->json($city, Response::HTTP_OK);
@@ -83,6 +86,7 @@ class CityController extends Controller
     public function destroy(City $city)
     {
         try {
+            Gate::authorize('delete', $city);
             $this->cityServices->destroy($city);
             
             return response()->json([
