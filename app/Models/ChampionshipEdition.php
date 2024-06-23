@@ -18,6 +18,11 @@ class ChampionshipEdition extends Model
         'championship_id',
     ];
 
+    public function championshipEditions()
+    {
+        return $this->hasMany(ChampionshipEdition::class);
+    }
+
     public function championship()
     {
         return $this->belongsTo(Championship::class);
