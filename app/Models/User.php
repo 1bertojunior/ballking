@@ -40,4 +40,10 @@ class User extends Authenticatable
             'role_id' => RoleEnum::class
         ];
     }
+
+    public function addresses()
+    {
+        return $this->hasMany(Address::class);
+    }
+    
 }
