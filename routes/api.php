@@ -6,6 +6,7 @@ use App\Http\Controllers\AddressController;
 use App\Http\Controllers\ChampionshipController;
 use App\Http\Controllers\ChampionshipEditionController;
 use App\Http\Controllers\PositionController;
+use App\Http\Controllers\RoundTypeController;
 use App\Http\Controllers\TeamController;
 use App\Http\Controllers\TeamEditionController;
 use Illuminate\Http\Request;
@@ -23,6 +24,7 @@ Route::apiResource('championship-editions', ChampionshipEditionController::class
 Route::apiResource('positions', PositionController::class)->middleware('auth:sanctum');
 Route::apiResource('teams', TeamController::class)->middleware('auth:sanctum');
 Route::apiResource('team-editions', TeamEditionController::class)->middleware('auth:sanctum');
+Route::apiResource('round-types', RoundTypeController::class)->middleware('auth:sanctum');
 
 
 require __DIR__.'/auth.php';
