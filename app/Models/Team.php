@@ -14,4 +14,12 @@ class Team extends Model{
         'abb',
         'championship_id',
     ];
+
+    public function championship(){
+        return $this->belongsTo(Championship::class);
+    }
+
+    public function teamEditions(){
+        return $this->hasMany(TeamEdition::class);
+    }
 }

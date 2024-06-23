@@ -21,4 +21,12 @@ class Championship extends Model
         return $this->belongsTo(City::class);
     }
 
+    public function championshipEditions(){
+        return $this->hasMany(ChampionshipEdition::class);
+    }
+
+    public function teams(){
+        return $this->hasMany(Team::class);
+    }
+
 }
