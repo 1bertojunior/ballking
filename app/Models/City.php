@@ -26,4 +26,9 @@ class City extends Model
     {
         return $this->hasMany(Address::class);
     }
+
+    public function championships()
+    {
+        return $this->hasMany(Championship::class);
+    }
 }
