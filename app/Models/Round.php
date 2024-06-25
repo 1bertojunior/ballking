@@ -12,7 +12,7 @@ class Round extends Model
     protected $table = "rounds";
 
     protected $fillable = [
-        'number',
+        'round',
         'round_type_id',
         'championship_edition_id'
     ];

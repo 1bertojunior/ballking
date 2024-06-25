@@ -23,9 +23,9 @@ class RoundUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'round' => 'required|number',
+            'round' => 'required|integer',
             'round_type_id' => 'required|exists:round_types,id',
-            'championship_type_id' => 'required|exists:championship_types,id',
+            'championship_edition_id' => 'required|exists:championship_editions,id',
         ];
     }
 }
