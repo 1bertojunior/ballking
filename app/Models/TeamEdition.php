@@ -21,4 +21,14 @@ class TeamEdition extends Model{
     public function championshipEditions() {
         return $this->hasMany(ChampionshipEdition::class);
     }
+
+    public function homeMatchups()
+    {
+        return $this->hasMany(Matchup::class, 'team_home_id');
+    }
+
+    public function awayMatchups()
+    {
+        return $this->hasMany(Matchup::class, 'team_away_id');
+    }
 }

@@ -24,4 +24,8 @@ class Round extends Model
     public function championshipEdition(){
         return $this->belongsTo(ChampionshipEdition::class);
     }
+
+    public function matchups(){
+        return $this->hasMany(Matchup::class);
+    }
 }
