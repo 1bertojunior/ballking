@@ -31,4 +31,9 @@ class City extends Model
     {
         return $this->hasMany(Championship::class);
     }
+
+    public function players()
+    {
+        return $this->hasMany(Player::class);
+    }
 }
