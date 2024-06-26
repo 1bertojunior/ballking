@@ -6,6 +6,7 @@ use App\Http\Controllers\AddressController;
 use App\Http\Controllers\ChampionshipController;
 use App\Http\Controllers\ChampionshipEditionController;
 use App\Http\Controllers\MatchupController;
+use App\Http\Controllers\PlayerController;
 use App\Http\Controllers\PositionController;
 use App\Http\Controllers\RoundController;
 use App\Http\Controllers\RoundTypeController;
@@ -29,6 +30,7 @@ Route::apiResource('team-editions', TeamEditionController::class)->middleware('a
 Route::apiResource('round-types', RoundTypeController::class)->middleware('auth:sanctum');
 Route::apiResource('rounds', RoundController::class)->middleware('auth:sanctum');
 Route::apiResource('matchups', MatchupController::class)->middleware('auth:sanctum');
+Route::apiResource('players', PlayerController::class)->middleware('auth:sanctum');
 
 
 require __DIR__.'/auth.php';
